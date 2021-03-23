@@ -15,7 +15,7 @@ interface CharacterDao {
 //    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg list: Character)
+    suspend fun insert(character: List<Character>)
 
     @Query("SELECT * FROM character")
     suspend fun getAllCharacter(): List<Character>

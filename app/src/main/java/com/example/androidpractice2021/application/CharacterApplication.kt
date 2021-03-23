@@ -1,4 +1,4 @@
-package com.example.androidpractice2020.application
+package com.example.androidpractice2021.application
 
 import android.app.Application
 import com.example.androidpractice2021.data.api.ApiFactory

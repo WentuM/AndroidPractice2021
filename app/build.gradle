@@ -35,6 +35,13 @@ android {
         it.buildConfigField 'String', 'API_ENDPOINT', baseUrl
     }
 
+    dataBinding {
+        enabled true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -72,6 +79,8 @@ dependencies {
 
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
 
     // region Retrofit

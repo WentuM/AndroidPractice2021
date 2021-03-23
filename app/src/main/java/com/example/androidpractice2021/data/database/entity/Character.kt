@@ -3,6 +3,7 @@ package com.example.androidpractice2021.data.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.androidpractice2021.data.api.response.ResultCharacter
 import com.example.androidpractice2021.data.api.response.RnMCharacterResponse
 
 @Entity(tableName = "character")
@@ -17,13 +18,15 @@ data class Character(
     @ColumnInfo(name = "gender")
     var gender: String,
     @ColumnInfo(name = "location")
-    var location: String
+    var location: String,
+    @ColumnInfo(name = "alive")
+    var alive: String
 ) {
     companion object {
-        fun mapResponsetoEntity(rnMCharacterResponse: RnMCharacterResponse): Character {
-            with(rnMCharacterResponse) {
+        fun mapResponsetoEntity(result: ResultCharacter): Character {
+            with(result) {
                 return Character(
-                    results[0].id, results[0].name, results[0].image, results[0].gender, results[0].location.name
+                    id, name, image, gender, location.name, status
                 )
             }
         }

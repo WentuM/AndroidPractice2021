@@ -1,16 +1,18 @@
 package com.example.androidpractice2021.data.database.repository
 
+import android.util.Log
 import com.example.androidpractice2021.data.api.CharacterApi
 import com.example.androidpractice2021.data.database.dao.CharacterDao
 import com.example.androidpractice2021.data.database.entity.Character
 import com.example.androidpractice2021.domain.CharacterRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import java.net.UnknownHostException
 
 class CharacterRepositoryImpl(
-        private val characterApi: CharacterApi,
-        private val characterDao: CharacterDao
+    private val characterApi: CharacterApi,
+    private val characterDao: CharacterDao
 ) : CharacterRepository {
 
 
@@ -77,15 +79,51 @@ class CharacterRepositoryImpl(
 //        return result
 //    }
 
-    override suspend fun getCharacterByName(cityName: String): Flow<Character> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getCharacterByName(characterName: String): Character =
+        try {
+            val response = characterApi.getCharacterByName(characterName)
+            Character(
+                response.id,
+                response.name,
+                response.image,
+                response.gender,
+                response.location.name,
+                response.status
+            )
+        } catch (e: UnknownHostException) {
+            characterDao.getCharacterByName(characterName)
+        }
 
-    override suspend fun getCharacterById(cityId: Int): Flow<Character> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getCharacterById(characterId: Int): Character =
+        try {
+            val response = characterApi.getCharacterById(characterId)
+            Character(
+                response.id,
+                response.name,
+                response.image,
+                response.gender,
+                response.location.name,
+                response.status
+            )
+        } catch (e: UnknownHostException) {
+            characterDao.getCharacterById(characterId)
+        }
 
-    override suspend fun getAllCharacter(page: String): Flow<ArrayList<Character>> {
-        TODO("Not yet implemented")
+    override suspend fun getAllCharacter(page: Int): ArrayList<Character> {
+        var result = arrayListOf<Character>()
+        try {
+            var characterResponse = characterApi.getAllCharacter(page).results
+            var i = 0
+            while (i < characterResponse.size) {
+                result.add(Character.mapResponsetoEntity(characterResponse[i]))
+                i++
+            }
+            characterDao.deleteAllCharacter()
+            characterDao.insert(result)
+        } catch (e: Exception) {
+            characterDao.getAllCharacter() as ArrayList<Character>
+        } finally {
+            return result
+        }
     }
 }

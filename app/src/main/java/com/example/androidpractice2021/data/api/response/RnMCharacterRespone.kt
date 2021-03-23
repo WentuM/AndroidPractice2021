@@ -2,7 +2,7 @@ package com.example.androidpractice2021.data.api.response
 
 data class RnMCharacterResponse(
     val info: Info,
-    val results: List<Result>
+    val results: ArrayList<ResultCharacter>
 )
 
 data class Info(
@@ -12,7 +12,7 @@ data class Info(
     val prev: String
 )
 
-data class Result(
+data class ResultCharacter(
     val created: String,
     val episode: List<String>,
     val gender: String,

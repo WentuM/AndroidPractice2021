@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.Flow
 interface CharacterRepository {
 
     suspend fun getCharacterByName(
-            cityName: String
-    ): Flow<Character>
+            characterName: String
+    ): Character
 
     suspend fun getCharacterById(
-            cityId: Int
-    ): Flow<Character>
+            characterId: Int
+    ): Character
 
     suspend fun getAllCharacter(
-            page: String
-    ): Flow<ArrayList<Character>>
+            page: Int
+    ): List<Character>
 }
