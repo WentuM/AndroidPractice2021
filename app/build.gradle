@@ -1,7 +1,7 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -17,12 +17,31 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    androidExtensions {
+        experimental = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_ENDPOINT', baseUrl
+    }
+
+    dataBinding {
+        enabled true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -32,6 +51,9 @@ android {
     }
 }
 
+def retrofit = "2.9.0"
+def moxy = "2.2.1"
+def room_version = "2.2.6"
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -48,4 +70,50 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+
+    // region Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+    // endregion
+
+    //RecylerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    //CircleImage
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Google Service Location
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.8' // 3.13.+ require minSDK 21
+
+    //Moxy
+    implementation "com.github.moxy-community:moxy:$moxy"
+    implementation "com.github.moxy-community:moxy-androidx:$moxy"
+    implementation "com.github.moxy-community:moxy-ktx:$moxy"
+    kapt "com.github.moxy-community:moxy-compiler:$moxy"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation("io.coil-kt:coil:1.0.0-rc3")
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 }
