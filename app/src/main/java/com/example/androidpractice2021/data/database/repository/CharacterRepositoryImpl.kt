@@ -24,7 +24,7 @@ class CharacterRepositoryImpl(
                 Character(
                         response.id,
                         response.name,
-                        getBitmap(response.image),
+                        "qwe",
                         response.gender,
                         response.location.name,
                         response.status
@@ -47,7 +47,7 @@ class CharacterRepositoryImpl(
                     character = Character(
                             id,
                             name,
-                            getBitmap(image),
+                            image,
                             gender,
                             location.name,
                             status

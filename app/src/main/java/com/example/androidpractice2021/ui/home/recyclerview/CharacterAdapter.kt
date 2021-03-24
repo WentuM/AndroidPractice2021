@@ -1,8 +1,7 @@
-package com.example.androidpractice2021.ui.recyclerview
+package com.example.androidpractice2021.ui.home.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -34,8 +33,7 @@ class CharacterAdapter(var list: ArrayList<Character>, var itemClick: (Int) -> U
             "Dead" -> holder.binding.txtAliveList.setTextColor(-65536)
             else -> holder.binding.txtAliveList.setTextColor(-256)
         }
-//        Picasso.with(holder.binding.root.context).load(character.image).into(holder.binding.imageCharacter)
-        holder.binding.imageCharacter.load(character.image)
+        Picasso.with(holder.binding.root.context).load(character.image).into(holder.binding.imageCharacter)
         holder.binding.executePendingBindings()
         holder.itemView.setOnClickListener {
             itemClick(character.id)

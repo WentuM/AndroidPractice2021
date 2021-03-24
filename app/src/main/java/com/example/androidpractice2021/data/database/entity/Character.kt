@@ -15,7 +15,7 @@ data class Character(
     @ColumnInfo(name = "name")
     var name: String,
     @ColumnInfo(name = "image")
-    var image: Bitmap,
+    var image: String,
     @ColumnInfo(name = "gender")
     var gender: String,
     @ColumnInfo(name = "location")
