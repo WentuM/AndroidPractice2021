@@ -6,6 +6,7 @@ import com.example.androidpractice2021.data.database.repository.CharacterReposit
 import com.example.androidpractice2021.domain.FindAllCharacterUseCase
 import com.example.androidpractice2021.domain.FindCharacterByIdUseCase
 import com.example.androidpractice2021.domain.FindCharacterByNameUseCase
+import com.example.androidpractice2021.router.AppRouter
 
 class ViewModelFactory(
     private val findAllCharacterUseCase: FindAllCharacterUseCase,
@@ -16,9 +17,12 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(findAllCharacterUseCase, findCharacterByIdUseCase,
-                    findCharacterByNameUseCase) as? T
+                HomeViewModel(findAllCharacterUseCase) as? T
                     ?: throw IllegalArgumentException("Unknown ViewModel class")
+            }
+            modelClass.isAssignableFrom(DetailCharacterViewModel::class.java) -> {
+                DetailCharacterViewModel(findCharacterByIdUseCase) as? T
+                    ?: throw java.lang.IllegalArgumentException("Unknown ViewModel class")
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class")

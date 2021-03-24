@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.DetailCharacterFragment">
 
     <data>
-
+        <variable
+            name="detailCharacter"
+            type="com.example.androidpractice2021.data.database.entity.Character" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,37 +15,28 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/city_icon_geo"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:id="@+id/detail_character_image"
+            android:layout_width="224dp"
+            android:layout_height="224dp"
+            android:layout_marginTop="32dp"
             android:foregroundGravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/city_name"
-            app:layout_constraintStart_toEndOf="@+id/city_name"
-            app:layout_constraintTop_toTopOf="@+id/city_name" />
-
-        <TextView
-            android:id="@+id/city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_margin="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="23sp"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/city_temp"
+            android:id="@+id/character_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="60sp"
-            android:gravity="center"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:text="@{detailCharacter.name}"
             android:textColor="@android:color/white"
-            android:layout_margin="12dp"
+            android:textSize="23sp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/city_name" />
+            app:layout_constraintTop_toBottomOf="@id/detail_character_image" />
+
 
         <ProgressBar
             android:id="@+id/progress_list"
@@ -58,16 +52,17 @@
 
 
         <TextView
-            android:id="@+id/city_description"
+            android:id="@+id/character_alive"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_margin="12dp"
             android:textSize="23sp"
+            android:text="@{detailCharacter.alive}"
             android:textColor="@android:color/white"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/city_temp" />
+            app:layout_constraintTop_toBottomOf="@+id/character_name" />
 
 
         <TextView
@@ -77,20 +72,20 @@
             android:layout_marginStart="36dp"
             android:layout_marginTop="36dp"
             android:gravity="center"
-            android:text="ВЕТЕР"
+            android:text="Last known location:"
             android:textColor="@android:color/white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/city_description" />
+            app:layout_constraintTop_toBottomOf="@+id/character_alive" />
 
         <TextView
-            android:id="@+id/direction_wind"
+            android:id="@+id/character_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:gravity="center"
             android:layout_margin="10dp"
-            android:text="Направление ветра: "
+            android:text="@{detailCharacter.location}"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,10 +96,10 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="36dp"
-            android:background="@android:color/black"
+            android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/direction_wind" />
+            app:layout_constraintTop_toBottomOf="@+id/character_location" />
 
         <TextView
             android:id="@+id/humidity"
@@ -113,7 +108,7 @@
             android:layout_marginStart="36dp"
             android:layout_marginTop="36dp"
             android:gravity="center"
-            android:text="ВЛАЖНОСТЬ"
+            android:text="Gender"
             android:textColor="@android:color/white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,8 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginStart="36dp"
+            android:text="@{detailCharacter.gender}"
             android:gravity="center"
-            android:text="Влажность: "
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

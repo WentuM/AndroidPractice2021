@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.*
 import com.example.androidpractice2021.data.database.dao.CharacterDao
 import com.example.androidpractice2021.data.database.entity.Character
+import com.example.androidpractice2021.ui.converter.Converters
 
-@Database(entities = arrayOf(Character::class), version = 3, exportSchema = false)
+@Database(entities = arrayOf(Character::class), version = 4, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class CharacterRoomDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao

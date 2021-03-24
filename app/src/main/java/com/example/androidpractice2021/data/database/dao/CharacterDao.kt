@@ -9,11 +9,6 @@ import com.example.androidpractice2021.data.database.entity.Character
 @Dao
 interface CharacterDao {
 
-
-//    suspend fun insert(list: List<City>) {
-//        insrt(*list.toTypedArray())
-//    }
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(character: List<Character>)
 

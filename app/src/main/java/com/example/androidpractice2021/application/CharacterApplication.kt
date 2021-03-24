@@ -14,7 +14,8 @@ class CharacterApplication : Application() {
     val repository by lazy {
         CharacterRepositoryImpl(
             ApiFactory.characterApi,
-            database.characterDao()
+            database.characterDao(),
+            applicationContext
         )
     }
 }

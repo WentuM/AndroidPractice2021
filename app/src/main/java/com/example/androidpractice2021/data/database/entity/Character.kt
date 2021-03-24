@@ -1,5 +1,6 @@
 package com.example.androidpractice2021.data.database.entity
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,21 +15,11 @@ data class Character(
     @ColumnInfo(name = "name")
     var name: String,
     @ColumnInfo(name = "image")
-    var image: String,
+    var image: Bitmap,
     @ColumnInfo(name = "gender")
     var gender: String,
     @ColumnInfo(name = "location")
     var location: String,
     @ColumnInfo(name = "alive")
     var alive: String
-) {
-    companion object {
-        fun mapResponsetoEntity(result: ResultCharacter): Character {
-            with(result) {
-                return Character(
-                    id, name, image, gender, location.name, status
-                )
-            }
-        }
-    }
-}
+)

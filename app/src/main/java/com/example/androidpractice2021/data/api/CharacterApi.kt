@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface CharacterApi {
 
-    @GET("")
+    @GET("character/")
     suspend fun getCharacterByName(
         @Query("name") characterName: String
     ): ResultCharacter
@@ -17,8 +17,7 @@ interface CharacterApi {
         @Query("page") page: Int
     ): RnMCharacterResponse
 
-    @GET("")
+    @GET("character/2")
     suspend fun getCharacterById(
-        @Query("id") characterId: Int
     ): ResultCharacter
 }

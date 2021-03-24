@@ -2,19 +2,12 @@ package com.example.androidpractice2021.ui.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatDrawableManager.get
-import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidpractice2021.R
+import coil.load
 import com.example.androidpractice2021.data.database.entity.Character
 import com.example.androidpractice2021.databinding.CharacterItemBinding
 import com.squareup.picasso.Picasso
-import java.lang.reflect.Array.get
 
 class CharacterAdapter(var list: ArrayList<Character>, var itemClick: (Int) -> Unit) :
     RecyclerView.Adapter<CharacterHolder>() {
@@ -35,11 +28,24 @@ class CharacterAdapter(var list: ArrayList<Character>, var itemClick: (Int) -> U
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
         val character = list[position]
         holder.binding.character = character
+        when (character.alive) {
+            "Alive" -> holder.binding.txtAliveList.setTextColor(-16711936)
+            "Dead" -> holder.binding.txtAliveList.setTextColor(-65536)
+            else -> holder.binding.txtAliveList.setTextColor(-256)
+        }
+//        Picasso.with(holder.binding.root.context).load(character.image).into(holder.binding.imageCharacter)
+        holder.binding.imageCharacter.load(character.image)
         holder.binding.executePendingBindings()
+        holder.itemView.setOnClickListener {
+            itemClick(character.id)
+        }
     }
 
-    fun submitlist(characterList: ArrayList<Character>) {
-        list = characterList
+    fun submitList(character: ArrayList<Character>) {
+        if (list != character) {
+            list = character
+            notifyDataSetChanged()
+        }
     }
 
     companion object : DiffUtil.ItemCallback<Character>() {

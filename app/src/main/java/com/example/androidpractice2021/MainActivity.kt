@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.androidpractice2020.router.AppRouter
+import com.example.androidpractice2021.router.AppRouter
 import com.example.androidpractice2021.ui.home.DetailCharacterFragment
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
     }
-//
+
 //    override fun openUserDetails(userId: Int) {
 //        navController.navigate(R.id.action_navigation_home_to_navigation_detail_character, DetailCharacterFragment.getBundle(userId))
 //    }
