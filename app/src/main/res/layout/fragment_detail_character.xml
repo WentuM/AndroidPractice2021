@@ -18,20 +18,20 @@
             android:id="@+id/detail_character_image"
             android:layout_width="224dp"
             android:layout_height="224dp"
-            android:layout_marginTop="32dp"
             android:foregroundGravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:transitionName="example2_transition"/>
 
         <TextView
             android:id="@+id/character_name"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@{detailCharacter.name}"
             android:textColor="@android:color/white"
-            android:textSize="23sp"
+            android:textSize="20sp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,9 +54,9 @@
         <TextView
             android:id="@+id/character_alive"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_margin="12dp"
-            android:textSize="23sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="20sp"
             android:text="@{detailCharacter.alive}"
             android:textColor="@android:color/white"
             android:gravity="center"
@@ -70,11 +70,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Last known location:"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_alive" />
 
@@ -84,9 +84,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:text="@{detailCharacter.location}"
-            android:textColor="@android:color/white"
+            android:textColor="@color/location"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wind" />
@@ -95,36 +95,36 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_location" />
 
         <TextView
-            android:id="@+id/humidity"
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Gender"
+            android:text="Gender:"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
-            android:id="@+id/number_humidity"
+            android:id="@+id/character_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="36dp"
             android:text="@{detailCharacter.gender}"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/humidity" />
+            app:layout_constraintTop_toBottomOf="@+id/gender" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

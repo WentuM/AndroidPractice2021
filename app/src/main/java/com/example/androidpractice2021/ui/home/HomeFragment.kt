@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.androidpractice2021.R
 import com.example.androidpractice2021.application.CharacterApplication
@@ -16,7 +19,9 @@ import com.example.androidpractice2021.domain.FindAllCharacterUseCase
 import com.example.androidpractice2021.domain.FindCharacterByIdUseCase
 import com.example.androidpractice2021.domain.FindCharacterByNameUseCase
 import com.example.androidpractice2021.ui.recyclerview.CharacterAdapter
+import kotlinx.android.synthetic.main.character_item.*
 import kotlinx.android.synthetic.main.fragment_characters.*
+import kotlinx.android.synthetic.main.fragment_detail_character.*
 import kotlinx.coroutines.Dispatchers
 
 class HomeFragment : Fragment() {
@@ -29,13 +34,13 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         application = activity?.application as (CharacterApplication)
         homeViewModel =
-            ViewModelProvider(this, initFactory()).get(HomeViewModel::class.java)
+                ViewModelProvider(this, initFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_characters, container, false)
         return root
     }
@@ -50,17 +55,26 @@ class HomeFragment : Fragment() {
     private fun initList() {
         val list = character_list
         val bundle = Bundle()
+        (view?.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
         if (characterList.size != 0) {
             adapter =
-                CharacterAdapter(
-                    characterList
-                ) {
-                    bundle.putInt("id", it)
-                    findNavController().navigate(
-                        R.id.action_navigation_home_to_navigation_detail_character,
-                        bundle
-                    )
-                }
+                    CharacterAdapter(
+                            characterList
+                    ) {
+                        bundle.putInt("id", it)
+                        val extras = FragmentNavigatorExtras(
+                                image_character to "example2_transition"
+                        )
+                        findNavController().navigate(
+                                R.id.action_navigation_home_to_navigation_detail_character,
+                                bundle,
+                                null,
+                                extras
+                        )
+                    }
+
             list.adapter = adapter
             adapter.submitList(characterList)
             adapter.notifyDataSetChanged()
@@ -68,15 +82,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFactory() = ViewModelFactory(
-        findAllCharacterUseCase = FindAllCharacterUseCase(
-            application.repository, Dispatchers.IO
-        ),
-        findCharacterByIdUseCase = FindCharacterByIdUseCase(
-            application.repository, Dispatchers.IO
-        ),
-        findCharacterByNameUseCase = FindCharacterByNameUseCase(
-            application.repository, Dispatchers.IO
-        )
+            findAllCharacterUseCase = FindAllCharacterUseCase(
+                    application.repository, Dispatchers.IO
+            ),
+            findCharacterByIdUseCase = FindCharacterByIdUseCase(
+                    application.repository, Dispatchers.IO
+            ),
+            findCharacterByNameUseCase = FindCharacterByNameUseCase(
+                    application.repository, Dispatchers.IO
+            )
     )
 
     private fun initSubscribes() {

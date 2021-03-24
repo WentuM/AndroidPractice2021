@@ -1,6 +1,8 @@
 package com.example.androidpractice2021.ui.home
 
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,23 +19,26 @@ import com.example.androidpractice2021.domain.FindCharacterByIdUseCase
 import com.example.androidpractice2021.domain.FindCharacterByNameUseCase
 import kotlinx.coroutines.Dispatchers
 
-class DetailCharacterFragment: Fragment() {
+class DetailCharacterFragment : Fragment() {
     private lateinit var application: CharacterApplication
     private lateinit var detailCharacterViewModel: DetailCharacterViewModel
     private var idCharacter: Int = -1
-    private lateinit var binding: FragmentDetailCharacterBinding
+    private var binding: FragmentDetailCharacterBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         application = activity?.application as (CharacterApplication)
         detailCharacterViewModel =
-            ViewModelProvider(this, initFactory()).get(DetailCharacterViewModel::class.java)
+                ViewModelProvider(this, initFactory()).get(DetailCharacterViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_detail_character, container, false)
-        val inflaterB = LayoutInflater.from(container?.context)
-        binding = FragmentDetailCharacterBinding.inflate(inflaterB)
         arguments?.getInt("id")?.let {
             idCharacter = it
         }
@@ -43,19 +48,21 @@ class DetailCharacterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentDetailCharacterBinding.bind(view)
+
         initCharacter()
     }
 
     private fun initFactory() = ViewModelFactory(
-        findAllCharacterUseCase = FindAllCharacterUseCase(
-            application.repository, Dispatchers.IO
-        ),
-        findCharacterByIdUseCase = FindCharacterByIdUseCase(
-            application.repository, Dispatchers.IO
-        ),
-        findCharacterByNameUseCase = FindCharacterByNameUseCase(
-            application.repository, Dispatchers.IO
-        )
+            findAllCharacterUseCase = FindAllCharacterUseCase(
+                    application.repository, Dispatchers.IO
+            ),
+            findCharacterByIdUseCase = FindCharacterByIdUseCase(
+                    application.repository, Dispatchers.IO
+            ),
+            findCharacterByNameUseCase = FindCharacterByNameUseCase(
+                    application.repository, Dispatchers.IO
+            )
     )
 
     private fun initCharacter() {
@@ -63,9 +70,18 @@ class DetailCharacterFragment: Fragment() {
             progress().observe(viewLifecycleOwner, Observer {
                 var character = it
                 Log.d("qwe10", character.toString())
-                binding.detailCharacter = character
-                binding.detailCharacterImage.load(character.image)
-                binding.executePendingBindings()
+                binding?.detailCharacter = character
+                binding?.detailCharacterImage?.load(character.image)
+                when (character.alive) {
+                    "Alive" -> binding?.characterAlive?.setTextColor(-16711936)
+                    "Dead" -> binding?.characterAlive?.setTextColor(-65536)
+                    else -> binding?.characterAlive?.setTextColor(-256)
+                }
+                when (character.gender) {
+                    "Male" -> binding?.characterGender?.setTextColor(-16711681)
+                    "Female" -> binding?.characterGender?.setTextColor(-65281)
+                }
+                binding?.executePendingBindings()
             })
         }
     }
