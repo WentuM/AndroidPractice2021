@@ -1,4 +1,4 @@
-package com.example.androidpractice2021.ui.dashboard
+package com.example.androidpractice2021.ui.main.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
