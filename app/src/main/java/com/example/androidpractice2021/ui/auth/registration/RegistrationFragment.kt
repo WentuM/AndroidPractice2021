@@ -2,6 +2,7 @@ package com.example.androidpractice2021.ui.auth.registration
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.example.androidpractice2021.ApplicationDelegate
 import com.example.androidpractice2021.R
 import kotlinx.android.synthetic.main.fragment_registration.*
@@ -28,7 +29,15 @@ class RegistrationFragment: MvpAppCompatFragment(R.layout.fragment_registration)
 
     private fun initListeners() {
         txv_redirect_registration.setOnClickListener { presenter.onLoginClick() }
-        btn_main_activity.setOnClickListener { presenter.onMainActivityClick() }
+        btn_main_activity.setOnClickListener { onSplashActivityClick() }
+    }
+
+    private fun onSplashActivityClick() {
+        val action = RegistrationFragmentDirections.actionRegistrationFragmentToSplashActivity(
+            edtx_email.text.toString(),
+            edtx_password.text.toString()
+        )
+        findNavController().navigate(action)
     }
 
     override fun navigateToMainActivity() {

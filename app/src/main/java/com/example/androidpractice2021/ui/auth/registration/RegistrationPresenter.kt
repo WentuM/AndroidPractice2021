@@ -12,8 +12,4 @@ class RegistrationPresenter(
     fun onLoginClick() {
         router.navigateTo(ScreensAuthActivity.LoginFragmentScreen)
     }
-
-    fun onMainActivityClick() {
-        router.navigateTo(ScreensAuthActivity.SplashActivityScreen)
-    }
 }

@@ -10,6 +10,7 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object ScreensAuthActivity {
 
+
     object SplashActivityScreen: SupportAppScreen() {
         override fun getActivityIntent(context: Context?): Intent {
             return Intent(context, SplashActivity::class.java)
